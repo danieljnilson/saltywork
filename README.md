@@ -1,4 +1,4 @@
 saltywork
 =========
 
-c\Code repo for LLNL&amp;UC Davis collaboration into Haloarchaea 
+c\Code repo for UC Davis collaboration into Haloarchaea 
