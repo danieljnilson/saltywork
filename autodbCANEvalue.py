@@ -20,12 +20,18 @@ import xlsxwriter
 Evalue = "1e-20"
 Ename = "EVAL1e-20"
 
+## Directory Correction
+
+home = os.getenv("HOME")
+
+
 ## Generating Dictionary/Array of Archaea Species and their Corresponding Accession Numbers
 
-dbCAN = "/home/daniel/dbCAN/" # File path to dBCAN and everything else.
-myfilepath = dbCAN + "Accessions.csv" #Erin's UC Davis Haloarchaea Accessions file
-Faapath = dbCAN + "Data/"
-SaveData = dbCAN + "Data/" + Ename + "/" # To prevent clutter inside the dbCAN folder
+dbCAN = home + "/dbCAN/" # File path to dBCAN and everything else.
+myfilepath = home + "/saltywork/"
+Accessionpath = myfilepath + "Accessions.csv" #Erin's UC Davis Haloarchaea Accessions file
+Faapath = myfilepath + "data/seq/"
+SaveData = myfilepath + "data/results/HMM/" + Ename + "/" # To prevent clutter inside the folder
 
 if not os.path.exists(SaveData):
     os.makedirs(SaveData)
@@ -36,7 +42,7 @@ Col1 = "Organism"
 Col2 = "Accession#"
 Col3 = "BioPROJECT"
 mydictionary={Col1:[], Col2:[], Col3:[] } #Making an array in python
-csvFile = csv.reader(open(myfilepath, "rU")) # the "rU" is there to alleviate an issue with headerless CSVs
+csvFile = csv.reader(open(Accessionpath, "rU")) # the "rU" is there to alleviate an issue with headerless CSVs
 firstline = True
 for row in csvFile:
     if firstline:    #skip first line
@@ -46,12 +52,7 @@ for row in csvFile:
     mydictionary[Col2].append(row[1])
     mydictionary[Col3].append(row[2])
 
-# Generate aaFASTA file name for organism, then precede to download aaFASTA sequence, scan it, and parse it.
-# Then moves on to the next organism.
-
 loops = len(mydictionary['Organism'])
-
-
 
 for i in range(loops):
     filename = mydictionary['Organism'][i] + ".faa" #FASTA file here
